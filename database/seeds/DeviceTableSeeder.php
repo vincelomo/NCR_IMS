@@ -20,7 +20,8 @@ class DeviceTableSeeder extends Seeder {
 			'owner_id' 		=> 1,
 			'borrower_id' 	=> NULL,
 			'is_borrowed' 	=> false,
-			'strict_mode'	=> false,
+			'code' 			=> 'ncr-xxxx-0001',
+			'type' 			=> 'device type 1',
 			'description' 	=> 'Device 1'
 		]);
 
@@ -28,7 +29,8 @@ class DeviceTableSeeder extends Seeder {
 			'owner_id' 		=> 1,
 			'borrower_id' 	=> NULL,
 			'is_borrowed' 	=> false,
-			'strict_mode'	=> false,
+			'code' 			=> 'ncr-xxxx-0002',
+			'type' 			=> 'device type 2',
 			'description' 	=> 'Device 2'
 		]);
 	}

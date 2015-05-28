@@ -2,7 +2,7 @@
 
 use Auth;
 
-class WelcomeController extends Controller {
+class DashboardController extends Controller {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -14,25 +14,15 @@ class WelcomeController extends Controller {
 	| controllers, you are free to modify or remove it as you desire.
 	|
 	*/
-
-	/**
-	 * Create a new controller instance.
-	 *
-	 * @return void
-	 */
-	public function __construct()
-	{
-		$this->middleware('guest');
-	}
-
+	
 	/**
 	 * Show the application welcome screen to the user.
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function getIndex()
 	{
-		return redirect('/dashboard');
+		return view('dashboard');
 	}
 
 }

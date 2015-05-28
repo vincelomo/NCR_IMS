@@ -23,7 +23,8 @@ class CreateDevicesTable extends Migration {
 			$table->foreign('borrower_id')->references('id')->on('users');
 
 			$table->boolean('is_borrowed');
-			$table->boolean('strict_mode');
+			$table->string('code')->unique();
+			$table->string('type');
 			$table->string('description');
 			$table->timestamps();
 		});

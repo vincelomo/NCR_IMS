@@ -11,6 +11,8 @@ class Device extends Model {
 	 */
 	protected $table = 'devices';
 
+	protected $fillable = ['owner_id'];
+
 	public function owner(){
 		return $this->hasOne('App\User','owner_id');
 	}

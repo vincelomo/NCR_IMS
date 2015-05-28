@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use Auth;
+use App\User;
 
 class HomeController extends Controller {
 
@@ -32,8 +33,8 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		//return view('home');
-		echo 'test';
+		$owned = User::find(Auth::user()->id)->devicesOwned()->get();
+		return view('home')->with('owned',$owned);
 	}
 
 }

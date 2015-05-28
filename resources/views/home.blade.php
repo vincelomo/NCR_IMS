@@ -3,20 +3,23 @@
 @section('content')
 <div class="container">
 	<div class="row">
-		<div class="col-md-10 col-md-offset-1">
-			<div class="panel panel-default">
-				<div class="panel-heading">Home</div>
-
-				<div class="panel-body">
-					You are logged in!
-				</div>
-				<ul>
-				@forelse (Auth::user()->devicesOwned() as $owned)
-					<li>{{ $owned->description }}</li>
-				@empty
-					<p>No devices</p>
-				@endforelse
-				</ul>
+		<div class="col-md-5">
+			<div class="panel panel-primary">
+				<div class="panel-heading">Devices Owned</div>
+				<table class="table">
+					<tr>
+						<th>Code</th>
+						<th>Type</th>
+					</tr>
+					@forelse ($owned as $device)
+					<tr class="{{ $device->is_borrowed ? 'danger' : 'success' }}" >
+						<th>{{ $device->code }}</th>
+						<td>{{ $device->type }}</td>
+					</tr>
+					@empty
+						<p>No devices owned</p>
+					@endforelse
+				</table>
 			</div>
 		</div>
 	</div>

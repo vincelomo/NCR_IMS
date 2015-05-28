@@ -18,6 +18,10 @@ class AuthController extends Controller {
 	|
 	*/
 
+	protected $loginPath = '/dashboard';
+	protected $redirectTo = '/dashboard';
+	protected $redirectPath = '/dashboard';
+
 	use AuthenticatesAndRegistersUsers;
 
 	/**
@@ -32,7 +36,33 @@ class AuthController extends Controller {
 		$this->auth = $auth;
 		$this->registrar = $registrar;
 
-		$this->middleware('guest', ['except' => 'getLogout']);
+		//$this->middleware('guest', ['except' => 'getLogout']);
 	}
 
+
+	public function getRegister()
+	{
+		if(!$this->auth->user())
+	    	return redirect('auth/login');
+	    	return view('auth.register');
+	}
+
+	public function postRegister()
+	{
+		if(!$this->auth->user())
+	    	return redirect('auth/login');
+
+		$validator = $this->registrar->validator($request->all());
+
+		if ($validator->fails())
+		{
+			$this->throwValidationException(
+				$request, $validator
+			);
+		}
+
+		$this->auth->login($this->registrar->create($request->all()));
+
+		return redirect($this->redirectPath());
+	}
 }
