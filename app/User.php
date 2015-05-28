@@ -31,4 +31,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $hidden = ['password', 'remember_token'];
 
+
+	/**
+	 * Return owned devices
+	 *
+	 */
+	public function devicesOwned(){
+		return $this->hasMany('App\Device','owner_id');
+	}
 }

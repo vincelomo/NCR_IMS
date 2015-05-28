@@ -1,7 +1,5 @@
 <?php namespace App\Http\Controllers;
 
-use App\Classes\EWSMailer;
-
 class WelcomeController extends Controller {
 
 	/*

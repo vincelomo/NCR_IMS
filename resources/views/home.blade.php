@@ -10,6 +10,13 @@
 				<div class="panel-body">
 					You are logged in!
 				</div>
+				<ul>
+				@forelse (Auth::user()->devicesOwned() as $owned)
+					<li>{{ $owned->description }}</li>
+				@empty
+					<p>No devices</p>
+				@endforelse
+				</ul>
 			</div>
 		</div>
 	</div>
