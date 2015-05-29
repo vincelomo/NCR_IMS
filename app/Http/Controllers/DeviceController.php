@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Device;
+use App\DeviceType;
 
 class DeviceController extends Controller {
 	/**
@@ -13,6 +14,7 @@ class DeviceController extends Controller {
 	 *
 	 * @return Response
 	 */
+	/*
 	public function getIndex()
 	{
 		//
@@ -27,18 +29,22 @@ class DeviceController extends Controller {
 	public function getSearch(Request $request)
 	{
 		//
-		$q = Device::query();
+		$devices = Device::query();
 
 		if( $request->query('owner') )
-			$q->where('owner_id',$request->query('owner'));
+			$devices->where('owner_id',$request->query('owner'));
 		if( $request->query('type') )
-			$q->whereType($request->query('type'));
-		if( $request->query('borrowed') == 0 )
-			$q->where('is_borrowed',false);
+			$devices->whereType($request->query('type'));
+		if( $request->query('borrowed'))
+			$devices->where('is_borrowed',$request->query('borrowed'));
 		if( $request->query('code'))
-			$q->where('code','like',$request->query('code').'%');
+			$devices->where('code','like',$request->query('code').'%');
 
-		return $q->get();
+		$devices = $devices->paginate(2);
+
+		$devices->appends($request->query());
+
+		return view('dashboard',compact('devices'));
 	}
 
 	/**
@@ -54,37 +60,7 @@ class DeviceController extends Controller {
 		return view('device.show')->with('device',$device);
 	}
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
+	public function getNew(){
+		return view('device.new')->with('types',DeviceType::all());
 	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
-
 }

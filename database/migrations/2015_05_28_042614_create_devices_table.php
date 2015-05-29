@@ -22,9 +22,12 @@ class CreateDevicesTable extends Migration {
 			$table->integer('borrower_id')->unsigned()->nullable()->default(NULL);
 			$table->foreign('borrower_id')->references('id')->on('users');
 
+			$table->integer('type')->unsigned();
+			$table->foreign('type')->references('id')->on('device_types');
+
 			$table->boolean('is_borrowed');
 			$table->string('code')->unique();
-			$table->string('type');
+			
 			$table->string('description');
 			$table->timestamps();
 		});

@@ -17,8 +17,15 @@ class UserTableSeeder extends Seeder {
 		DB::table('users')->delete();
 
 		User::create([
-			'name' 		=> 'Vincent Mark Lomocso',
+			'name' 		=> 'IMS Administrator',
 			'email' 	=> 'vl185028@ncr.com',
+			'password' 	=> Hash::make('password123'),
+			'isadmin'	=> true
+		]);
+
+		User::create([
+			'name' 		=> 'Vincent Mark Lomocso',
+			'email' 	=> 'vm.lomocso@gmail.com',
 			'password' 	=> Hash::make('password123'),
 			'isadmin'	=> true
 		]);

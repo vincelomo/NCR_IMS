@@ -18,9 +18,7 @@ class AuthController extends Controller {
 	|
 	*/
 
-	protected $loginPath = '/dashboard';
 	protected $redirectTo = '/dashboard';
-	protected $redirectPath = '/dashboard';
 
 	use AuthenticatesAndRegistersUsers;
 

@@ -13,6 +13,12 @@
 
 Route::get('/', 'WelcomeController@index');
 
+//Route::get('/device/new',['middleware' => 'auth']);
+
+Route::group(['middleware' => 'auth'],function(){
+	Route::get('/device/new','DeviceController@getNew');
+});
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',

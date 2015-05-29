@@ -58,5 +58,16 @@
 	<!-- Scripts -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+		$(function(){
+			$('select[name=type]').change(function(){
+				if($(this).val() == 'other')
+					$('#othertype').show();
+				else
+					$('#othertype').hide();
+			});
+		});
+	</script>
 </body>
 </html>

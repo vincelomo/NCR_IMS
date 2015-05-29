@@ -21,7 +21,7 @@ class DeviceTableSeeder extends Seeder {
 			'borrower_id' 	=> NULL,
 			'is_borrowed' 	=> false,
 			'code' 			=> 'ncr-xxxx-0001',
-			'type' 			=> 'device type 1',
+			'type' 			=> 1,
 			'description' 	=> 'Device 1'
 		]);
 
@@ -30,8 +30,44 @@ class DeviceTableSeeder extends Seeder {
 			'borrower_id' 	=> NULL,
 			'is_borrowed' 	=> false,
 			'code' 			=> 'ncr-xxxx-0002',
-			'type' 			=> 'device type 2',
+			'type' 			=> 2,
 			'description' 	=> 'Device 2'
+		]);
+
+		Device::create([
+			'owner_id' 		=> 1,
+			'borrower_id' 	=> NULL,
+			'is_borrowed' 	=> false,
+			'code' 			=> 'ncr-xxxx-0003',
+			'type' 			=> 3,
+			'description' 	=> 'Device 3'
+		]);
+
+		Device::create([
+			'owner_id' 		=> 2,
+			'borrower_id' 	=> NULL,
+			'is_borrowed' 	=> false,
+			'code' 			=> 'ncr-xxxx-0004',
+			'type' 			=> 1,
+			'description' 	=> 'Device 4'
+		]);
+
+		Device::create([
+			'owner_id' 		=> 2,
+			'borrower_id' 	=> NULL,
+			'is_borrowed' 	=> false,
+			'code' 			=> 'ncr-xxxx-0005',
+			'type' 			=> 2,
+			'description' 	=> 'Device 5'
+		]);
+
+		Device::create([
+			'owner_id' 		=> 2,
+			'borrower_id' 	=> NULL,
+			'is_borrowed' 	=> false,
+			'code' 			=> 'ncr-xxxx-0006',
+			'type' 			=> 3,
+			'description' 	=> 'Device 6'
 		]);
 	}
 
