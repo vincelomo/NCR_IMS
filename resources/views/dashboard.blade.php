@@ -20,14 +20,14 @@
 						<th> Owner </th>
 						<th></th>
 					</tr></thead>
-				@foreach ( $devices as $device )
+				@foreach ( $devices as $device ) 
 					<tr class="{{ $device->is_borrowed ? 'danger' : 'success' }}">
 						<td data-label="Code"> <span>{{ $device->code }} </span></td>
 						<td data-label="Type"> <span>{{ $device->typeName() }} </span></td>
 						<td data-label="Description"> <span>{{ $device->description }} </span></td>
 						<td data-label="Owner"> <span>{{ $device->owner->name }} </span></td>
 						<td>
-							<a href="#" class="btn btn-primary">View</a>
+							<a href="{{ url('/device/show/'.$device->id) }}" class="btn btn-primary">View</a>
 							<a href="#" class="btn btn-warning">Edit</a>
 						</td>
 					</tr>

@@ -18,7 +18,7 @@ class AuthController extends Controller {
 	|
 	*/
 
-	protected $redirectTo = '/dashboard';
+	protected $redirectTo = '/device/search';
 
 	use AuthenticatesAndRegistersUsers;
 

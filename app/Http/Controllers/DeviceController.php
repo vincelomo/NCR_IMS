@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use Auth;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -55,12 +56,47 @@ class DeviceController extends Controller {
 	 */
 	public function getShow($id)
 	{
-		//
 		$device = Device::find($id);
 		return view('device.show')->with('device',$device);
 	}
 
 	public function getNew(){
-		return view('device.new')->with('types',DeviceType::all());
+		return view('device.new')->with('types',DeviceType::all()->sortBy('name'));
+	}
+
+	public function postNew(Request $request)
+	{
+		$this->validate($request,
+			[
+				'device-code' 	=> 'required|unique:devices,code',
+				'description' 	=> 'required',
+				'type' 			=> 'required',
+				'specify' 		=> 'required_if:type,other'
+			]
+		);
+
+		$device = new Device;
+		$device->owner_id = Auth::user()->id;
+		$device->borrower_id = NULL;
+		$device->is_borrowed = false;
+		if( is_numeric($request->input('type')) ){
+			$device->type = $request->input('type');
+		} else if( ($request->input('type') == 'other' && $request->has('specify')) || is_string($request->input('type')) ){
+			$theType = ( $request->has('specify') ) ? $request->input('specify') : $request->input('type');
+			$existing = DeviceType::where('name',$theType)->first();
+			if($existing == null){
+				$newType = new DeviceType;
+				$newType->name = $theType;
+				$newType->save();
+				$device->type = $newType->id;
+			} else {
+				$device->type = $existing->id;
+			}
+		}
+		$device->code = $request->input('device-code');
+		$device->description = $request->input('description');
+		$device->save();
+
+		return redirect('/device/show/'.$device->id);
 	}
 }

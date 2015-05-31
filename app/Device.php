@@ -17,6 +17,10 @@ class Device extends Model {
 		return $this->hasOne('App\User','id','owner_id');
 	}
 
+	public function type(){
+		return $this->hasOne('App\DeviceType','id','type');
+	}
+
 	public function typeName(){
 		return $this->hasOne('App\DeviceType','id','type')->first()->name;
 	}

@@ -13,15 +13,13 @@
 
 Route::get('/', 'WelcomeController@index');
 
-//Route::get('/device/new',['middleware' => 'auth']);
-
 Route::group(['middleware' => 'auth'],function(){
 	Route::get('/device/new','DeviceController@getNew');
+	Route::post('/device/new','DeviceController@postNew');
 });
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
-	'dashboard' => 'DashboardController',
 	'device' => 'DeviceController',
 ]);
