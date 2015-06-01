@@ -28,7 +28,9 @@
 						<td data-label="Owner"> <span>{{ $device->owner->name }} </span></td>
 						<td>
 							<a href="{{ url('/device/show/'.$device->id) }}" class="btn btn-primary">View</a>
-							<a href="#" class="btn btn-warning">Edit</a>
+							@if (Auth::check())
+							<a href="{{ url('device/edit/'.$device->id) }}" class="btn btn-warning">Edit</a>
+							@endif
 						</td>
 					</tr>
 				@endforeach

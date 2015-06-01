@@ -57,6 +57,8 @@ class DeviceController extends Controller {
 	public function getShow($id)
 	{
 		$device = Device::find($id);
+		if( $device == null )
+			abort(404);
 		return view('device.show')->with('device',$device);
 	}
 
@@ -98,5 +100,48 @@ class DeviceController extends Controller {
 		$device->save();
 
 		return redirect('/device/show/'.$device->id);
+	}
+
+	public function getEdit($id)
+	{
+		$device = Device::find($id);
+		if( $device == null )
+			abort(404);
+		return view('device.edit')->with(['device'=>$device, 'types'=> DeviceType::all()->sortBy('name')]);
+	}
+
+	public function postEdit(Request $request,$id)
+	{
+		$this->validate($request,
+			[
+				'device-code' 	=> 'required|unique:devices,code,'.$id,
+				'description' 	=> 'required',
+				'type' 			=> 'required',
+				'specify' 		=> 'required_if:type,other'
+			]
+		);
+		$device = Device::find($id);
+		if( $device == null)
+			abort(404);
+
+		$device->code = $request->input('device-code');
+		$device->description = $request->input('description');
+		if( is_numeric($request->input('type')) ){
+			$device->type = $request->input('type');
+		} else if ($request->input('type') == 'other' && $request->has('specify')) {
+			$theType = $request->input('specify');
+			$existing = DeviceType::where('name','=',$theType)->first();
+			if($existing == null){
+				$newType = new DeviceType;
+				$newType->name = $theType;
+				$newType->save();
+				$device->type = $newType->id;
+			} else {
+				$device->type = $existing->id;
+			}
+		}
+		$device->save();
+
+		return redirect('/device/show/'.$id);
 	}
 }
