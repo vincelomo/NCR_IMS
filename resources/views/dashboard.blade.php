@@ -10,7 +10,51 @@
 					@if (Auth::check())
 						<a href="/device/new" class="btn btn-default">New Device</a>
 					@endif
+
 				</div>
+				<nav class="navbar navbar-default">
+					<div class="container-fluid">
+						<!-- Brand and toggle get grouped for better mobile display -->
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+							<div class="navbar-brand">Filter: </div>
+						</div>
+					
+						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+							<ul class="nav navbar-nav">
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Owner <span class="caret"></span></a>
+									<ul class="dropdown-menu" role="menu">
+										@if(Auth::check())
+										<li><a href="#">Me</a></li>
+										@endif
+										@foreach($ownerList as $owner)
+										<li><a href=""> {{ $owner->name }} </a></li>
+										@endforeach
+									</ul>
+								</li>
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Type <span class="caret"></span></a>
+									<ul class="dropdown-menu" role="menu">
+										@foreach($types as $type)
+										<li><a href="#">{{ $type->name }}</a></li>
+										@endforeach
+									</ul>
+								</li>
+								<div class="btn-group" data-toggle="buttons">
+								  <label class="btn btn-default navbar-btn">
+								    <input type="checkbox" autocomplete="off"> Unborrowed
+								  </label>
+								</div>
+							</ul>
+						</div>
+					</div>
+				</nav>
 				@if (isset($devices))
 				<table class="table table-condensed">
 					<thead><tr>

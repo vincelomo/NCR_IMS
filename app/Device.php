@@ -14,7 +14,7 @@ class Device extends Model {
 	protected $fillable = ['owner_id'];
 
 	public function owner(){
-		return $this->hasOne('App\User','id','owner_id');
+		return $this->belongsTo('App\User','owner_id');
 	}
 
 	public function type(){

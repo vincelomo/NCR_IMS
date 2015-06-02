@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
+use App\User;
 use App\Device;
 use App\DeviceType;
 
@@ -42,10 +43,20 @@ class DeviceController extends Controller {
 			$devices->where('code','like',$request->query('code').'%');
 
 		$devices = $devices->paginate(2);
-
 		$devices->appends($request->query());
 
-		return view('dashboard',compact('devices'));
+		$ownerList = User::query();
+		if(Auth::check())
+			$ownerList->where('id','!=',Auth::id());
+		$ownerList = $ownerList->orderBy('name')->get();
+
+		$types = DeviceType::orderBy('name')->get();
+
+		return view('dashboard')->with([
+			'devices'	=>$devices, 
+			'ownerList' => $ownerList,
+			'types' 	=> $types
+		]);
 	}
 
 	/**
