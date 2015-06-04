@@ -52,10 +52,13 @@ class DeviceController extends Controller {
 
 		$types = DeviceType::orderBy('name')->get();
 
+		$urlparams = array_except($request->query(),'page');
+
 		return view('dashboard')->with([
 			'devices'	=>$devices, 
 			'ownerList' => $ownerList,
-			'types' 	=> $types
+			'types' 	=> $types,
+			'urlparams' => $urlparams
 		]);
 	}
 

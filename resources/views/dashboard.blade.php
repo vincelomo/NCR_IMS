@@ -10,7 +10,6 @@
 					@if (Auth::check())
 						<a href="/device/new" class="btn btn-default">New Device</a>
 					@endif
-
 				</div>
 				<nav class="navbar navbar-default">
 					<div class="container-fluid">
@@ -28,29 +27,38 @@
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
 							<ul class="nav navbar-nav">
 								<li class="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Owner <span class="caret"></span></a>
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Owner <span class="caret"></span><br>
+										@if( Request::has('owner') )
+											{{ Auth::check() &&  $urlparams['owner'] == Auth::id() ? 'Me' : $ownerList->where('id',$urlparams['owner'])->first()->name }}
+										@else
+											All
+										@endif
+									</a>
 									<ul class="dropdown-menu" role="menu">
+										<li><a href="{{ '/device/search?'.http_build_query(array_except($urlparams,'owner')) }}">All</a></li>
 										@if(Auth::check())
-										<li><a href="#">Me</a></li>
+										<li><a href="{{ '/device/search?'.http_build_query(array_merge($urlparams,['owner'=>Auth::id()])) }}">Me</a></li>
 										@endif
 										@foreach($ownerList as $owner)
-										<li><a href=""> {{ $owner->name }} </a></li>
+										<li><a href="{{ '/device/search?'.http_build_query(array_merge($urlparams,['owner'=>$owner->id])) }}"> {{ $owner->name }} </a></li>
 										@endforeach
 									</ul>
 								</li>
 								<li class="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Type <span class="caret"></span></a>
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Type <span class="caret"></span><br>
+										@if( Request::has('type') )
+											{{ $types->where('id',$urlparams['type'])->first()->name }}
+										@else
+											All
+										@endif
+									</a>
 									<ul class="dropdown-menu" role="menu">
+										<li><a href="{{ '/device/search?'.http_build_query(array_except($urlparams,'type')) }}">All</a></li>
 										@foreach($types as $type)
-										<li><a href="#">{{ $type->name }}</a></li>
+										<li><a href="{{ '/device/search?'.http_build_query(array_merge($urlparams,['type'=>$type->id])) }}">{{ $type->name }}</a></li>
 										@endforeach
 									</ul>
 								</li>
-								<div class="btn-group" data-toggle="buttons">
-								  <label class="btn btn-default navbar-btn">
-								    <input type="checkbox" autocomplete="off"> Unborrowed
-								  </label>
-								</div>
 							</ul>
 						</div>
 					</div>
